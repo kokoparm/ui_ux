@@ -12,13 +12,13 @@ mp_drawing = mp.solutions.drawing_utils
 mp_hands = mp.solutions.hands
 
 
-def add_text(image, categories, prob, classes):
+def add_text(image, string):
     temp = Image.fromarray(image)
     draw = ImageDraw.Draw(temp)
     font = ImageFont.truetype("fonts/gulim.ttc", 20)
     draw.text(
         (image.shape[0] / 7, image.shape[1] / 5),
-        categories[classes[0]] + f"    {np.max(prob)*100:.2f}",
+        string,
         font=font,
         fill=(255, 0, 0),
         # stroke_width=2,
@@ -57,6 +57,7 @@ if __name__ == "__main__":
         "ㅡ",
         "ㅣ",
     ]
+    string = "loading"
     count = 0
     cap = cv2.VideoCapture(1)
     with mp_hands.Hands(
@@ -109,7 +110,8 @@ if __name__ == "__main__":
                     classes = np.argmax(model.predict(xyz), axis=-1)
                     # print(classes)
                     print(categories[classes[0]])
-                    image = add_text(image, categories, prob, classes)
+                    string = categories[classes[0]] + f"   {np.max(prob)*100:.2f}"
+            image = add_text(image, string)
 
             cv2.imshow("Hands", image)
             cv2.imshow("keypoints", black)
