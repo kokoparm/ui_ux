@@ -54,19 +54,6 @@ class KSLtoText:
     def set_model(self):
         if self.npy:
             self.model.add(Input(shape=self.data[0].shape[1:]))
-            # self.model.add(Conv1D(100, (3,), padding="same", input_shape=self.data[0].shape[1:]))
-            # self.model.add(Activation("relu"))
-            # self.model.add(Conv1D(64, (3,)))
-            # self.model.add(Activation("relu"))
-            # self.model.add(MaxPooling1D(pool_size=(2,)))
-            # self.model.add(Dropout(0.25))
-
-            # self.model.add(Conv1D(64, (3,), padding="same"))
-            # self.model.add(Activation("relu"))
-            # self.model.add(Conv1D(64, (3,)))
-            # self.model.add(Activation("relu"))
-            # self.model.add(MaxPooling1D(pool_size=(2,)))
-            # self.model.add(Dropout(0.25))
         else:
             self.model.add(Conv2D(100, (3, 3), padding="same", input_shape=self.data[0].shape[1:]))
             self.model.add(Activation("relu"))
@@ -148,6 +135,7 @@ if __name__ == "__main__":
         "ㅣ",
     ]
     print(len(categories))
+    # ktt.set_train_test(categories, "./dataset/captures")
     ktt.set_train_test(categories, "./dataset/keypoints", npy=True)
     print(ktt.data[0].shape[1:])
     print(ktt.data[0][0])

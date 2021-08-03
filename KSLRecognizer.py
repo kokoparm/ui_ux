@@ -11,6 +11,22 @@ import mediapipe as mp
 mp_drawing = mp.solutions.drawing_utils
 mp_hands = mp.solutions.hands
 
+
+def add_text(image, categories, prob, classes):
+    temp = Image.fromarray(image)
+    draw = ImageDraw.Draw(temp)
+    font = ImageFont.truetype("fonts/gulim.ttc", 20)
+    draw.text(
+        (image.shape[0] / 7, image.shape[1] / 5),
+        categories[classes[0]] + f"    {np.max(prob)*100:.2f}",
+        font=font,
+        fill=(255, 0, 0),
+        # stroke_width=2,
+    )
+    image = np.array(temp)
+    return image
+
+
 if __name__ == "__main__":
     model = load_model("./models/ksl-keypoints_epochs-500_batch-10.hdf5")
     categories = [
@@ -61,15 +77,17 @@ if __name__ == "__main__":
             image.flags.writeable = False
             roi = image[100:300, 200:400].copy()
             image = cv2.rectangle(image, (200, 100), (400, 300), (255, 0, 0), 5, cv2.LINE_8)
-            img_to_test = image[100:300, 200:400].copy()
-            img_to_test = cv2.resize(img_to_test, (100, 100))
+            img_for_process = roi.copy()
+            img_for_process = cv2.resize(img_for_process, (100, 100))
 
-            results = hands.process(img_to_test)
+            results = hands.process(img_for_process)
 
             # Draw the hand annotations on the image.
             image.flags.writeable = True
             image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
             black = np.zeros((200, 200, 3), np.uint8)
+
+            # 검정 창에 keypoints 출력
             if results.multi_hand_landmarks:
                 for hand_landmarks in results.multi_hand_landmarks:
                     mp_drawing.draw_landmarks(black, hand_landmarks, mp_hands.HAND_CONNECTIONS)
@@ -86,22 +104,12 @@ if __name__ == "__main__":
                     print(xyz)
                     prob = model.predict_proba(xyz)
                     print("Predicted:")
-                    print(prob)
+                    # print(prob)
                     print(np.max(prob))
                     classes = np.argmax(model.predict(xyz), axis=-1)
-                    print(classes)
+                    # print(classes)
                     print(categories[classes[0]])
-                    temp = Image.fromarray(image)
-                    draw = ImageDraw.Draw(temp)
-                    font = ImageFont.truetype("fonts/gulim.ttc", 20)
-                    draw.text(
-                        (image.shape[0] / 7, image.shape[1] / 5),
-                        categories[classes[0]] + f"    {np.max(prob)*100:.2f}",
-                        font=font,
-                        fill=(255, 0, 0),
-                        # stroke_width=2,
-                    )
-                    image = np.array(temp)
+                    image = add_text(image, categories, prob, classes)
 
             cv2.imshow("Hands", image)
             cv2.imshow("keypoints", black)

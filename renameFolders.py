@@ -56,6 +56,7 @@ eng_kor = dict(zip(ENGS, KORS))
 
 # print(eng_kor)
 
+
 def eng_to_kor(base_dir):
     folders = os.listdir(base_dir)
 
@@ -67,6 +68,9 @@ def eng_to_kor(base_dir):
             print(src + " to " + dst)
         except KeyError as e:
             print(e, "is KOR")
-if __name__=="__main__":
-    base_dir = "./dataset/captures"
+
+
+if __name__ == "__main__":
+    # base_dir = "./dataset/captures"
+    base_dir = "./dataset/keypoints"
     eng_to_kor(base_dir)
