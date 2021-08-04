@@ -54,19 +54,6 @@ class KSLtoText:
     def set_model(self):
         if self.npy:
             self.model.add(Input(shape=self.data[0].shape[1:]))
-            # self.model.add(Conv1D(100, (3,), padding="same", input_shape=self.data[0].shape[1:]))
-            # self.model.add(Activation("relu"))
-            # self.model.add(Conv1D(64, (3,)))
-            # self.model.add(Activation("relu"))
-            # self.model.add(MaxPooling1D(pool_size=(2,)))
-            # self.model.add(Dropout(0.25))
-
-            # self.model.add(Conv1D(64, (3,), padding="same"))
-            # self.model.add(Activation("relu"))
-            # self.model.add(Conv1D(64, (3,)))
-            # self.model.add(Activation("relu"))
-            # self.model.add(MaxPooling1D(pool_size=(2,)))
-            # self.model.add(Dropout(0.25))
         else:
             self.model.add(Conv2D(100, (3, 3), padding="same", input_shape=self.data[0].shape[1:]))
             self.model.add(Activation("relu"))
@@ -118,7 +105,6 @@ class KSLtoText:
 
 if __name__ == "__main__":
     ktt = KSLtoText()
-    # categories = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
     categories = [
         "ㄱ",
         "ㄴ",
