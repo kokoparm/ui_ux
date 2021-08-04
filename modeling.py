@@ -1,18 +1,14 @@
-from keras.utils import to_categorical
-from keras.models import Sequential
-from keras.layers import MaxPooling2D, MaxPooling1D
-from keras.layers import Activation, Conv2D, Conv1D, Flatten, Dense, Dropout, Input
-from sklearn.model_selection import train_test_split
-from keras.optimizers import SGD, Adadelta, Adagrad, Adam, Adamax, RMSprop, Nadam
-from keras.callbacks import History
-from PIL import Image
-import numpy as np
 import glob
-import matplotlib.pyplot as plt
-import time
 import os
+
+import numpy as np
+from keras.callbacks import History
+from keras.layers import Activation, Conv2D, Dense, Dropout, Flatten, Input, MaxPooling2D
+from keras.models import Sequential
+from keras.preprocessing.image import img_to_array, load_img
+from keras.utils import to_categorical
 from sklearn.metrics import confusion_matrix
-from keras.preprocessing.image import load_img, img_to_array, ImageDataGenerator
+from sklearn.model_selection import train_test_split
 
 
 class KSLtoText:

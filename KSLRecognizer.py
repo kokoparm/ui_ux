@@ -1,12 +1,9 @@
-from keras.preprocessing import image
-from keras.applications.inception_v3 import preprocess_input, decode_predictions, InceptionV3
-import numpy as np
 import cv2
-from keras.models import load_model
-from PIL import Image, ImageFont, ImageDraw
-import matplotlib.pyplot as plt
-import glob
 import mediapipe as mp
+import numpy as np
+from keras.models import load_model
+from keras.preprocessing import image
+from PIL import Image, ImageDraw, ImageFont
 
 mp_drawing = mp.solutions.drawing_utils
 mp_hands = mp.solutions.hands
