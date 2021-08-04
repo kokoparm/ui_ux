@@ -134,6 +134,7 @@ if __name__ == "__main__":
         "ㅣ",
     ]
     print(len(categories))
+    # ktt.set_train_test(categories, "./dataset/captures")
     ktt.set_train_test(categories, "./dataset/keypoints", npy=True)
     print(ktt.data[0].shape[1:])
     print(ktt.data[0][0])
